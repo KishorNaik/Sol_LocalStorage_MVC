@@ -4,24 +4,29 @@ using Sol_Demo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Sol_Demo.Persitance
 {
     public static class Data
     {
-        public static UserModel GetOrSet(LocalStorage localStorage, string key, UserModel userModel)
+        public static string GetOrSet(LocalStorage localStorage, string key, string value=null)
         {
+            string data = null;
             if (!localStorage.Exists(key))
             {
-                localStorage.Store<UserModel>(key, userModel);
+               
+
+                localStorage.Store<String>(key, value);
+                data = value;
             }
             else
             {
-                userModel = localStorage.Get<UserModel>(key);
+                data = localStorage.Get<String>(key);
             }
 
-            return userModel;
+            return data;
         }
     }
 }

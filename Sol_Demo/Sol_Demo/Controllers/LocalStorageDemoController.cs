@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hanssens.Net;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Sol_Demo.Models;
 using Sol_Demo.Persitance;
 
@@ -39,18 +40,22 @@ namespace Sol_Demo.Controllers
         {
             localStorage.Clear();
 
-            Users = Data.GetOrSet(localStorage, "mykey", new UserModel()
+            Users = new UserModel()
             {
                 FirstName = "Kishor",
                 LastName = "Naik"
-            });
+            };
+
+            Data.GetOrSet(localStorage, "mykey", JsonConvert.SerializeObject(Users));
 
             return View(Users);
         }
 
         public IActionResult Index1()
         {
-            Users = Data.GetOrSet(localStorage, "mykey", null);
+            var userModelJson = Data.GetOrSet(localStorage, "mykey");
+
+            Users = JsonConvert.DeserializeObject<UserModel>(userModelJson);
 
             return View(Users);
         }

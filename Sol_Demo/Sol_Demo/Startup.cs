@@ -25,19 +25,19 @@ namespace Sol_Demo
         {
             services.AddControllersWithViews();
 
-            //services.AddTransient<LocalStorageConfiguration>((leServiceProvider) =>
-            //{
-            //    return new LocalStorageConfiguration()
-            //    {
-            //        //EnableEncryption = true,
-            //        //EncryptionSalt = "f73841e69d767344416590b95224fe2"
-            //    };
-            //});
+            services.AddTransient<LocalStorageConfiguration>((leServiceProvider) =>
+            {
+                return new LocalStorageConfiguration()
+                {
+                    EnableEncryption = true,
+                    EncryptionSalt = "f73841e69d767344416590b95224fe2f73841e69d767344416590b95224fe2f73841e69d767344416590b95224fe2f73841e69d767344416590b95224fe2"
+                };
+            });
             services.AddTransient<LocalStorage>((leServiceProvider) =>
             {
-                //var localConfig = leServiceProvider.GetService(typeof(LocalStorageConfiguration)) as ILocalStorageConfiguration;
+                var localConfig = leServiceProvider.GetService(typeof(LocalStorageConfiguration)) as ILocalStorageConfiguration;
 
-                return new LocalStorage();
+                return new LocalStorage(localConfig,"setyourpassword");
             });
         }
 
